@@ -54,14 +54,22 @@
 		2DA29D4F229C20D70008C15C /* MemoryCards */ = {
 			isa = PBXGroup;
 			children = (
-				2DA29D50229C20D70008C15C /* AppDelegate.swift */,
+				2DA29D62229C233B0008C15C /* Supporting Files */,
 				2DA29D52229C20D70008C15C /* ViewController.swift */,
 				2DA29D54229C20D70008C15C /* Main.storyboard */,
-				2DA29D57229C20D80008C15C /* Assets.xcassets */,
-				2DA29D59229C20D80008C15C /* LaunchScreen.storyboard */,
 				2DA29D5C229C20D80008C15C /* Info.plist */,
 			);
 			path = MemoryCards;
+			sourceTree = "<group>";
+		};
+		2DA29D62229C233B0008C15C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2DA29D50229C20D70008C15C /* AppDelegate.swift */,
+				2DA29D57229C20D80008C15C /* Assets.xcassets */,
+				2DA29D59229C20D80008C15C /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
