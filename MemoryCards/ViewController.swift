@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     // MARK: - PROPERTIES and OUTLETS
     lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
     
-    var emojiChoices: [String] = CardTheme.Halloween.emojis
+    var emojiChoices = [String]()
     var emoji = [Int : String]()
     
     var backgroundColor: UIColor!
@@ -27,10 +27,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = backgroundColor ?? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        for cardButton in cardButtons {
-            cardButton.backgroundColor = cardColor ?? #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1)
-        }
+        newGame()
     }
     
     func updateViewFromModel() {
@@ -48,9 +45,24 @@ class ViewController: UIViewController {
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 0) : (cardColor ?? #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1))
             }
             
+            if card.isMatched {
+                UIView.animate(withDuration: 1) {
+                    button.alpha = 0
+                }
+            }
+            
             if button.backgroundColor?.cgColor.alpha == 0 {
                 button.isEnabled = false
             }
+        }
+        
+        if game.matchCount == game.cards.count / 2 {
+            let gameOverAC = UIAlertController(title: "Congratulations!", message: "Your score is \(game.score)!", preferredStyle: .alert)
+            gameOverAC.addAction(UIAlertAction(title: "Start New Game!", style: .default) { [weak self] _ in
+                self?.newGame()
+            })
+            
+            present(gameOverAC, animated: true)
         }
     }
 
@@ -65,7 +77,21 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func newGame(_ sender: UIButton!) {
+    @IBAction func newGamePressed(_ sender: UIButton!) {
+        newGame()
+    }
+    
+    // MARK: - Helper METHODS
+    func emoji(for card: Card) -> String {
+        if emoji[card.identifier] == nil, !emojiChoices.isEmpty {
+            let randomIndex = Int.random(in: 0 ..< emojiChoices.count)
+            emoji[card.identifier] = emojiChoices.remove(at: randomIndex) // populate the dictionary 
+        }
+        
+        return emoji[card.identifier] ?? "?"
+    }
+    
+    func newGame() {
         emojiChoices = []
         emoji = [:]
         
@@ -89,17 +115,11 @@ class ViewController: UIViewController {
                 cardButton.backgroundColor = cardColor
                 cardButton.setTitle("", for: .normal)
                 cardButton.isEnabled = true
+                
+                UIView.animate(withDuration: 1) {
+                    cardButton.alpha = 1
+                }
             }
         }
-    }
-    
-    // MARK: - Helper METHODS
-    func emoji(for card: Card) -> String {
-        if emoji[card.identifier] == nil, !emojiChoices.isEmpty {
-            let randomIndex = Int.random(in: 0 ..< emojiChoices.count)
-            emoji[card.identifier] = emojiChoices.remove(at: randomIndex) // populate the dictionary 
-        }
-        
-        return emoji[card.identifier] ?? "?"
     }
 }

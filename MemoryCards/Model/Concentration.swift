@@ -6,7 +6,7 @@
 //  Copyright © 2019 Michele Galvagno. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum Points: Int {
     case mismatchPenalty = 1, matchFound
@@ -17,6 +17,7 @@ class Concentration {
     var indexOfOneAndOnlyFaceUpCard: Int?
     var flipCount = 0
     var score = 0
+    var matchCount = 0
     
     // Keep track of which cards have been seen
     private var seenCards: Set<Int> = []
@@ -34,6 +35,7 @@ class Concentration {
                     cards[index].isMatched = true
                     
                     score += Points.matchFound.rawValue
+                    matchCount += 1
                 } else if seenCards.contains(index) || seenCards.contains(matchIndex) {
                     // cards didn't match, penalise the player
                     score -= Points.mismatchPenalty.rawValue
