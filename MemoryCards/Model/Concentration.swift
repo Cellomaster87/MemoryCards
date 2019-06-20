@@ -13,6 +13,7 @@ class Concentration {
     
     var indexOfOneAndOnlyFaceUpCard: Int?
     
+    // Decide what to do when a player taps the card (the else statement will always execute first)
     func chooseCard(at index: Int) {
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
@@ -35,12 +36,12 @@ class Concentration {
         }
     }
     
+    // generate the cards for the game
     init(numberOfPairsOfCards: Int) {
         for _ in 0 ..< numberOfPairsOfCards {
             let card = Card()
-            
             cards += [card, card]
         }
-        // TODO: Shuffle the cards
+        cards.shuffle()
     }
 }

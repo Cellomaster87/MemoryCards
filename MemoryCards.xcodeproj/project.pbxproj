@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D75F1B122BC0E8A004235A1 /* CardThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D75F1B022BC0E8A004235A1 /* CardThemes.swift */; };
 		2D7BB98C22B7F0E300AC1642 /* Concentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7BB98B22B7F0E300AC1642 /* Concentration.swift */; };
 		2D7BB98E22B7F22C00AC1642 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7BB98D22B7F22C00AC1642 /* Card.swift */; };
 		2DA29D51229C20D70008C15C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA29D50229C20D70008C15C /* AppDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D75F1B022BC0E8A004235A1 /* CardThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardThemes.swift; sourceTree = "<group>"; };
 		2D7BB98B22B7F0E300AC1642 /* Concentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concentration.swift; sourceTree = "<group>"; };
 		2D7BB98D22B7F22C00AC1642 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		2DA29D4D229C20D70008C15C /* MemoryCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,6 +41,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D75F1B222BC1443004235A1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2D75F1B022BC0E8A004235A1 /* CardThemes.swift */,
+				2D7BB98D22B7F22C00AC1642 /* Card.swift */,
+				2D7BB98B22B7F0E300AC1642 /* Concentration.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		2DA29D44229C20D70008C15C = {
 			isa = PBXGroup;
 			children = (
@@ -59,9 +71,8 @@
 			isa = PBXGroup;
 			children = (
 				2DA29D62229C233B0008C15C /* Supporting Files */,
+				2D75F1B222BC1443004235A1 /* Model */,
 				2DA29D52229C20D70008C15C /* ViewController.swift */,
-				2D7BB98D22B7F22C00AC1642 /* Card.swift */,
-				2D7BB98B22B7F0E300AC1642 /* Concentration.swift */,
 				2DA29D54229C20D70008C15C /* Main.storyboard */,
 				2DA29D5C229C20D80008C15C /* Info.plist */,
 			);
@@ -150,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DA29D53229C20D70008C15C /* ViewController.swift in Sources */,
+				2D75F1B122BC0E8A004235A1 /* CardThemes.swift in Sources */,
 				2DA29D51229C20D70008C15C /* AppDelegate.swift in Sources */,
 				2D7BB98C22B7F0E300AC1642 /* Concentration.swift in Sources */,
 				2D7BB98E22B7F22C00AC1642 /* Card.swift in Sources */,
