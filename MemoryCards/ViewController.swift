@@ -15,18 +15,6 @@ class ViewController: UIViewController {
     var emojiChoices: [String] = CardTheme.Halloween.emojis
     var emoji = [Int : String]()
     
-    var flipCount: Int = 0 {
-        didSet {
-            flipCountLabel.text = "Flips: \(flipCount)"
-        }
-    }
-    
-    var score: Int = 0 {
-        didSet {
-            scoreLabel.text = "Score: \(score)"
-        }
-    }
-    
     var backgroundColor: UIColor!
     var cardColor: UIColor!
 
@@ -46,8 +34,10 @@ class ViewController: UIViewController {
     }
     
     func updateViewFromModel() {
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
+        flipCountLabel.text = "Flips: \(game.flipCount)"
+        scoreLabel.text = "Score: \(game.score)"
+        
+        for (index, button) in cardButtons.enumerated() {
             let card = game.cards[index]
             
             if card.isFaceUp {
@@ -57,13 +47,15 @@ class ViewController: UIViewController {
                 button.setTitle("", for: .normal)
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 0) : (cardColor ?? #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1))
             }
+            
+            if button.backgroundColor?.cgColor.alpha == 0 {
+                button.isEnabled = false
+            }
         }
     }
 
     // MARK: - Action METHODS
     @IBAction func touchCard(_ sender: UIButton) {
-        flipCount += 1
-        
         if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
@@ -76,12 +68,12 @@ class ViewController: UIViewController {
     @IBAction func newGame(_ sender: UIButton!) {
         emojiChoices = []
         emoji = [:]
-        updateViewFromModel() // bingo!
         
-        flipCount = 0
-        score = 0
-        
+        game.flipCount = 0
+        game.score = 0
         game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        
+        updateViewFromModel() // bingo!
         
         if let randomTheme = CardTheme(rawValue: Int.random(in: 0 ... CardTheme.allCases.count - 1)) {
             emojiChoices = randomTheme.emojis
@@ -96,6 +88,7 @@ class ViewController: UIViewController {
             for cardButton in cardButtons {
                 cardButton.backgroundColor = cardColor
                 cardButton.setTitle("", for: .normal)
+                cardButton.isEnabled = true
             }
         }
     }
