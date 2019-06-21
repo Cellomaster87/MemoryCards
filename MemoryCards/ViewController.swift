@@ -10,7 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
     // MARK: - PROPERTIES and OUTLETS
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+    var game: Concentration! {
+        didSet {
+            updateViewFromModel()
+        }
+    }
     
     var emojiChoices = [String]()
     var emoji = [Int : String]()
@@ -26,6 +30,7 @@ class ViewController: UIViewController {
     // MARK: - View Management
     override func viewDidLoad() {
         super.viewDidLoad()
+        game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
         
         newGame()
     }
@@ -61,6 +66,10 @@ class ViewController: UIViewController {
             gameOverAC.addAction(UIAlertAction(title: "Start New Game!", style: .default) { [weak self] _ in
                 self?.newGame()
             })
+            
+            scoreLabel.alpha = 0
+            flipCountLabel.alpha = 0
+            newGameButton.alpha = 0
             
             present(gameOverAC, animated: true)
         }
@@ -118,6 +127,9 @@ class ViewController: UIViewController {
                 
                 UIView.animate(withDuration: 1) {
                     cardButton.alpha = 1
+                    self.newGameButton.alpha = 1
+                    self.scoreLabel.alpha = 1
+                    self.flipCountLabel.alpha = 1
                 }
             }
         }

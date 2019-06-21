@@ -18,8 +18,7 @@ class Concentration {
     var flipCount = 0
     var score = 0
     var matchCount = 0
-    
-    // Keep track of which cards have been seen
+
     private var seenCards: Set<Int> = []
     
     // Decide what to do when a player taps the card (the else statement will always execute first)
