@@ -14,10 +14,31 @@ enum Points: Int {
 
 class Concentration {
     var cards = [Card]()
-    var indexOfOneAndOnlyFaceUpCard: Int?
+    
     var flipCount = 0
     var score = 0
     var matchCount = 0
+    
+    var indexOfOneAndOnlyFaceUpCard: Int? {
+        get {
+            var foundIndex: Int?
+            for (index, card) in cards.enumerated() {
+                if card.isFaceUp {
+                    if foundIndex == nil {
+                        foundIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set {
+            for (index, _) in cards.enumerated() {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
 
     private var seenCards: Set<Int> = []
     
@@ -26,9 +47,7 @@ class Concentration {
         flipCount += 1
         
         if !cards[index].isMatched {
-            // if we have a card facing up already, check if it matches the chosen one
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
-                // if they match, mark them as matched
                 if cards[matchIndex].identifier == cards[index].identifier {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
@@ -36,25 +55,14 @@ class Concentration {
                     score += Points.matchFound.rawValue
                     matchCount += 1
                 } else if seenCards.contains(index) || seenCards.contains(matchIndex) {
-                    // cards didn't match, penalise the player
                     score -= Points.mismatchPenalty.rawValue
                 }
-                // Both cards have been seen, add them to the set.
                 seenCards.insert(index)
                 seenCards.insert(matchIndex)
                 
-                // Turn the chosen card face-up
                 cards[index].isFaceUp = true
-                
-                // Since there was a card face-up already (and we selected a new one), we no longer have only 1 card face-up
-                indexOfOneAndOnlyFaceUpCard = nil
             } else {
-                // either no cards or 2 cards are face up
-                for flipDownIndex in cards.indices {
-                    cards[flipDownIndex].isFaceUp = false
-                }
-                
-                cards[index].isFaceUp = true
+                // this happens if the tapped card is the first one to be flipped.
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
@@ -64,7 +72,7 @@ class Concentration {
     init(numberOfPairsOfCards: Int) {
         for _ in 0 ..< numberOfPairsOfCards {
             let card = Card()
-            cards += [card, card]
+            cards += [card, card] // they will have the same identifier!
         }
         cards.shuffle()
     }

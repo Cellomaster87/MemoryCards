@@ -9,11 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController {
-    // MARK: - PROPERTIES and OUTLETS
-    var game: Concentration! {
-        didSet {
-            updateViewFromModel()
-        }
+    lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    
+    var numberOfPairsOfCards: Int {
+        return (cardButtons.count + 1) / 2
     }
     
     var emojiChoices = [String]()
@@ -29,9 +28,7 @@ class ViewController: UIViewController {
     
     // MARK: - View Management
     override func viewDidLoad() {
-        super.viewDidLoad()
-        game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
-        
+        super.viewDidLoad()        
         newGame()
     }
     
