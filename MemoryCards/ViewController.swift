@@ -9,22 +9,23 @@
 import UIKit
 
 class ViewController: UIViewController {
-    lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    
     
     var numberOfPairsOfCards: Int {
         return (cardButtons.count + 1) / 2
     }
     
-    var emojiChoices = [String]()
-    var emoji = [Int : String]()
+    private var emojiChoices = [String]()
+    private var emoji = [Int : String]()
     
     var backgroundColor: UIColor!
     var cardColor: UIColor!
 
-    @IBOutlet var flipCountLabel: UILabel!
-    @IBOutlet var scoreLabel: UILabel!
-    @IBOutlet var cardButtons: [UIButton]!
-    @IBOutlet var newGameButton: UIButton!
+    @IBOutlet private var flipCountLabel: UILabel!
+    @IBOutlet private var scoreLabel: UILabel!
+    @IBOutlet private var cardButtons: [UIButton]!
+    @IBOutlet private var newGameButton: UIButton!
     
     // MARK: - View Management
     override func viewDidLoad() {
@@ -32,7 +33,7 @@ class ViewController: UIViewController {
         newGame()
     }
     
-    func updateViewFromModel() {
+    private func updateViewFromModel() {
         flipCountLabel.text = "Flips: \(game.flipCount)"
         scoreLabel.text = "Score: \(game.score)"
         
@@ -73,7 +74,7 @@ class ViewController: UIViewController {
     }
 
     // MARK: - Action METHODS
-    @IBAction func touchCard(_ sender: UIButton) {
+    @IBAction private func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
@@ -83,12 +84,12 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func newGamePressed(_ sender: UIButton!) {
+    @IBAction private func newGamePressed(_ sender: UIButton!) {
         newGame()
     }
     
     // MARK: - Helper METHODS
-    func emoji(for card: Card) -> String {
+    private func emoji(for card: Card) -> String {
         if emoji[card.identifier] == nil, !emojiChoices.isEmpty {
             let randomIndex = Int.random(in: 0 ..< emojiChoices.count)
             emoji[card.identifier] = emojiChoices.remove(at: randomIndex) // populate the dictionary 
@@ -97,7 +98,7 @@ class ViewController: UIViewController {
         return emoji[card.identifier] ?? "?"
     }
     
-    func newGame() {
+    private func newGame() {
         emojiChoices = []
         emoji = [:]
         
@@ -105,7 +106,7 @@ class ViewController: UIViewController {
         game.score = 0
         game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
         
-        updateViewFromModel() // bingo!
+        updateViewFromModel()
         
         if let randomTheme = CardTheme(rawValue: Int.random(in: 0 ... CardTheme.allCases.count - 1)) {
             emojiChoices = randomTheme.emojis
