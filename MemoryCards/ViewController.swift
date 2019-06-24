@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     }
     
     private var emojiChoices = [String]()
-    private var emoji = [Int : String]()
+    private var emoji = [Card : String]()
     
     var backgroundColor: UIColor!
     var cardColor: UIColor!
@@ -90,12 +90,12 @@ class ViewController: UIViewController {
     
     // MARK: - Helper METHODS
     private func emoji(for card: Card) -> String {
-        if emoji[card.identifier] == nil, !emojiChoices.isEmpty {
+        if emoji[card] == nil, !emojiChoices.isEmpty {
             let randomIndex = Int.random(in: 0 ..< emojiChoices.count)
-            emoji[card.identifier] = emojiChoices.remove(at: randomIndex) // populate the dictionary 
+            emoji[card] = emojiChoices.remove(at: randomIndex) // populate the dictionary
         }
         
-        return emoji[card.identifier] ?? "?"
+        return emoji[card] ?? "?"
     }
     
     private func newGame() {
