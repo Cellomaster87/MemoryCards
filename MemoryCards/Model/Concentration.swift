@@ -12,7 +12,7 @@ enum Points: Int {
     case mismatchPenalty = 1, matchFound
 }
 
-class Concentration {
+struct Concentration {
     // this has to be public for other files to use but this file is responsible for setting it.
     private(set) var cards = [Card]()
     
@@ -45,7 +45,7 @@ class Concentration {
     private var seenCards: Set<Int> = []
     
     // Decide what to do when a player taps the card (the else statement will always execute first)
-    func chooseCard(at index: Int) {
+    mutating func chooseCard(at index: Int) {
         assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index)): chosen index not in the cards")
         
         flipCount += 1
